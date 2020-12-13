@@ -23,42 +23,43 @@ node {
 				env.HUB_ORG_DH="conttest414-aad2@force.com"
 				env.SFDC_HOST_DH="https://login.salesforce.com"
 				env.CONNECTED_APP_CONSUMER_KEY_DH="3MVG9SOw8KERNN0.kF.gZhK.3VoVL65c2VncoLTiigo1vv50w4m8GQiUw5VoIURBHzBvmt9W_u_NyvEM7ES78"
-				env.JWT_CRED_ID_DH="3e95ac4d-61d5-4b8c-937c-8050ccd12b89"
-					withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {
-					// -------------------------------------------------------------------------
-					// Deploy (new optional)
-					// -------------------------------------------------------------------------
-					stage('Deploy Code') {
-						println 'KEY IS' 
-						println JWT_KEY_CRED_ID
-						println HUB_ORG
-						println SFDC_HOST
-						println CONNECTED_APP_CONSUMER_KEY
+				env.JWT_CRED_ID="3e95ac4d-61d5-4b8c-937c-8050ccd12b89"
+			}
+
+			withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {
+				// -------------------------------------------------------------------------
+				// Deploy (new optional)
+				// -------------------------------------------------------------------------
+				stage('Deploy Code') {
+					println 'KEY IS' 
+					println JWT_KEY_CRED_ID
+					println HUB_ORG
+					println SFDC_HOST
+					println CONNECTED_APP_CONSUMER_KEY
+				
+					if (isUnix()) {
+						rc = sh returnStatus: true, script: "sfdx force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
+					}else{
+						rc = bat returnStatus: true, script: "sfdx force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${jwt_key_file}\" --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
+					}
+					if (rc != 0) { error 'hub org authorization failed' }
+		
+							println rc
+							
+							// need to pull out assigned username
+							if (isUnix()) {
+								rmsg = sh returnStdout: true, script: "sfdx force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
+							}else{
+							rmsg = bat returnStdout: true, script: "sfdx force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
+							}
+							
+					//printf rmsg
+					//println('Hello from a Job DSL script!')
+					//println(rmsg)
 					
-						if (isUnix()) {
-							rc = sh returnStatus: true, script: "sfdx force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
-						}else{
-							rc = bat returnStatus: true, script: "sfdx force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${jwt_key_file}\" --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
-						}
-						if (rc != 0) { error 'hub org authorization failed' }
-			
-								println rc
-								
-								// need to pull out assigned username
-								if (isUnix()) {
-									rmsg = sh returnStdout: true, script: "sfdx force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
-								}else{
-								rmsg = bat returnStdout: true, script: "sfdx force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
-								}
-								
-						//printf rmsg
-						//println('Hello from a Job DSL script!')
-						//println(rmsg)
-						
-					}
-					stage("clean"){
-						cleanWs()
-					}
+				}
+				stage("clean"){
+					cleanWs()
 				}
 			}
 		}
