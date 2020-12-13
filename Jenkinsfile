@@ -23,7 +23,7 @@ node {
 				env.HUB_ORG="conttest414-aad2@force.com"
 				env.SFDC_HOST="https://test-3b7.my.salesforce.com/"
 				env.CONNECTED_APP_CONSUMER_KEY="3MVG9SOw8KERNN0.kF.gZhK.3VoVL65c2VncoLTiigo1vv50w4m8GQiUw5VoIURBHzBvmt9W_u_NyvEM7ES78"
-				env.JWT_KEY_CRED_ID="3e95ac4d-61d5-4b8c-937c-8050ccd12b89"
+				env.JWT_KEY_CRED_ID="fc627bd8-4ca9-4b40-92e4-d7cebb6ef642"
 			}
 
 			withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {
