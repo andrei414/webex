@@ -28,11 +28,6 @@ node {
 					env.JWT_CRED_ID_DH="3e95ac4d-61d5-4b8c-937c-8050ccd12b89"
 				}
 				stage('Deploy Code') {
-					println 'KEY IS' 
-					println JWT_KEY_CRED_ID
-					println HUB_ORG
-					println SFDC_HOST
-					println CONNECTED_APP_CONSUMER_KEY
 				
 					if (isUnix()) {
 						rc = sh returnStatus: true, script: "sfdx force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
