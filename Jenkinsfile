@@ -3,6 +3,19 @@
 import groovy.json.JsonSlurperClassic
 
 node {
+
+	def env.HUB_ORG_DH="conttest414-aad2@force.com"
+	def env.SFDC_HOST_DH="https://login.salesforce.com"
+	def env.ONNECTED_APP_CONSUMER_KEY_DH="3MVG9SOw8KERNN0.kF.gZhK.3VoVL65c2VncoLTiigo1vv50w4m8GQiUw5VoIURBHzBvmt9W_u_NyvEM7ES78"
+	def env.JWT_CRED_ID_DH="3e95ac4d-61d5-4b8c-937c-8050ccd12b89"
+	
+	println 'KEY IS' 
+    println JWT_KEY_CRED_ID
+    println HUB_ORG
+    println SFDC_HOST
+    println CONNECTED_APP_CONSUMER_KEY
+	
+	
     withEnv(["HOME=${env.WORKSPACE}"]) {
         withEnv(["PATH+sfx=${WORKSPACE}/sfdx/bin"]) {
             stage('Install Sfdx') {
@@ -17,12 +30,7 @@ node {
                 sh 'echo $PATH'
                 sh 'sfdx --help'
             }
-			stage("Inject Env Variables") {
-				env.HUB_ORG_DH="conttest414-aad2@force.com"
-				env.SFDC_HOST_DH="https://login.salesforce.com"
-				env.ONNECTED_APP_CONSUMER_KEY_DH="3MVG9SOw8KERNN0.kF.gZhK.3VoVL65c2VncoLTiigo1vv50w4m8GQiUw5VoIURBHzBvmt9W_u_NyvEM7ES78"
-				env.JWT_CRED_ID_DH="3e95ac4d-61d5-4b8c-937c-8050ccd12b89"
-			}
+
 			withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {
 				// -------------------------------------------------------------------------
 				// Deploy (new optional)
