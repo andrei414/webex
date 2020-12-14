@@ -25,6 +25,10 @@ node {
 				env.CONNECTED_APP_CONSUMER_KEY="3MVG9SOw8KERNN0.kF.gZhK.3VoVL65c2VncoLTiigo1vv50w4m8GQiUw5VoIURBHzBvmt9W_u_NyvEM7ES78"
 				env.JWT_KEY_CRED_ID="fc627bd8-4ca9-4b40-92e4-d7cebb6ef642"
 			}
+		stage('checkout source') {
+        		// when running in multi-branch job, one must issue this command
+        		checkout scm
+    		}
 
 			withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {
 				// -------------------------------------------------------------------------
