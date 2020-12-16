@@ -68,7 +68,7 @@ node {
 					//println(rmsg)
 					
 				}
-				dir("force-app/*/*/*/") {
+				dir("force-app/main/default/classes/") {
 					sh "pwd"
 				}
 				stage("clean"){
