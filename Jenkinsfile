@@ -68,6 +68,9 @@ node {
 					//println(rmsg)
 					
 				}
+				dir("force-app") {
+					sh "pwd"
+				}
 				stage('check pwd') {
 					sh "ls -la"
 					sh "pwd"
