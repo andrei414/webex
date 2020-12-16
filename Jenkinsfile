@@ -41,7 +41,7 @@ node {
 					println HUB_ORG
 					println SFDC_HOST
 					println CONNECTED_APP_CONSUMER_KEY
-                    sh "printenv"
+					sh "printenv"
 					
 					sh "ls -la"
 					sh "cd force-app"
@@ -69,9 +69,6 @@ node {
 					
 				}
 				dir("force-app/main/default/classes/") {
-					sh "pwd"
-					sh "ls -la"
-					
 					stage("clean"){
 						sh "pwd"
 						sh "ls -la"
