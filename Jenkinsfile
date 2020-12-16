@@ -71,9 +71,12 @@ node {
 				dir("force-app/main/default/classes/") {
 					sh "pwd"
 					sh "ls -la"
-				}
-				stage("clean"){
-					cleanWs()
+					
+					stage("clean"){
+						sh "pwd"
+						sh "ls -la"
+						cleanWs()
+					}
 				}
 			}
 		}
