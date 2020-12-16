@@ -75,6 +75,7 @@ node {
 					stage("clean"){
 						sh "pwd"
 						sh "ls -la"
+						sh 'sfdx --help'
 						cleanWs()
 					}
 				}
