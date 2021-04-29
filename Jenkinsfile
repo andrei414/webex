@@ -1,4 +1,4 @@
-#!groovy2
+#!groovy4
 import groovy.json.JsonSlurperClassic
 node {
 
