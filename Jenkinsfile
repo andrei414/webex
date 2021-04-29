@@ -1,4 +1,4 @@
-#!groovsa
+#!groovsap
 import groovy.json.JsonSlurperClassic
 node {
 
